@@ -1,28 +1,30 @@
 FROM java:8
 
-MAINTAINER itzg
+MAINTAINER stealthii
 
-ENV APT_GET_UPDATE 2015-10-03
-RUN apt-get update
+# Install server admin dependencies
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-  libmozjs-24-bin \
-  imagemagick \
-  lsof \
-  nano \
-  sudo \
-  vim \
-  && apt-get clean
-RUN update-alternatives --install /usr/bin/js js /usr/bin/js24 100
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      libmozjs-24-bin \
+      imagemagick \
+      lsof \
+      nano \
+      sudo \
+      vim && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    update-alternatives --install /usr/bin/js js /usr/bin/js24 100
 
-RUN wget -O /usr/bin/jsawk https://github.com/micha/jsawk/raw/master/jsawk
-RUN chmod +x /usr/bin/jsawk
-RUN useradd -M -s /bin/false --uid 1000 minecraft \
-  && mkdir /data \
-  && mkdir /config \
-  && mkdir /mods \
-  && mkdir /plugins \
-  && chown minecraft:minecraft /data /config /mods /plugins
+RUN wget -O /usr/bin/jsawk https://github.com/micha/jsawk/raw/master/jsawk && \
+    chmod +x /usr/bin/jsawk
+
+RUN useradd -M -s /bin/false --uid 1000 minecraft && \
+    mkdir /data && \
+    mkdir /config && \
+    mkdir /mods && \
+    mkdir /plugins && \
+    chown minecraft:minecraft /data /config /mods /plugins
 
 EXPOSE 25565
 
