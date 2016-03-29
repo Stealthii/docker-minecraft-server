@@ -1,6 +1,6 @@
 #!/bin/bash
 
-do
-  docker build -t stealthii/minecraft-server minecraft-server
-done
+docker build -t stealthii/minecraft-server:vanilla vanilla
+docker build -t stealthii/minecraft-server:spigot spigot
+docker build -t stealthii/minecraft-server:paper paper
 
